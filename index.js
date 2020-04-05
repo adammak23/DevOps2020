@@ -10,11 +10,18 @@ const client = redis.createClient(
     }
 );
 
+client.set('counter', 0)
+
 app.get('/', (req, res) => 
 {
-    res.send("Licznik odwiedzin");
-}
-);
+    //process.exit(0);
+    client.get('counter', (err, counter_value) =>
+    {
+        resizeTo.send('Counter: ' + counter_value);
+        client.set('counter', parseInt(counter_value) + 1);
+    });
+
+});
 
 app.listen(8080, () =>
 {
