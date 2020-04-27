@@ -1,12 +1,10 @@
 {
   "name": "backend",
-  "version": "1.0",
-  "description": "backend",
+  "version": "1.0.0",
+  "description": "backend description",
   "main": "index.js",
-  "repository": "xd",
-  "author": "xd",
-  "license": "xd",
-  "private": null,
+  "author": "Adam Makiewicz",
+  "license": "MIT",
   "scripts": {
     "dev": "nodemon",
     "start": "node index.js"
