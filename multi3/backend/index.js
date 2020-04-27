@@ -67,7 +67,9 @@ app.listen(5000, err => {
 app.get('/droptable', (req, res)=>
 {
   client.flushdb( function (err, succeeded) {
-    console.log(succeeded);
+  console.log(succeeded);
+  client.set(0, parseInt(0));
+  client.set(1, parseInt(1));
 });
 });
 
@@ -104,33 +106,22 @@ app.get('/islucky/:num', (req, res)=>
         greatest_lucky = i;
       }
       
-      for (let k = 0; k < lucky.length;)
+      for (let k = 2; k <= num; k++)
       {
-        if(k > num) break;
-
         client.get(k, (err, NextValue) => 
         {
           if(!NextValue) 
           {
-            client.set(k+1, parseInt(lucky[k]));
-            console.log(k+1,lucky[k], ' setting');
+            client.set(k, parseInt(lucky[k-1]));
+            //console.log(k,lucky[k-1], ' setting');
+            if(k == num) res.send({text:`${num} liczba z kolei w ciągu liczb szczęśliwych to: ${lucky[k-1]}`});
           }
           else
           {
-            console.log(k+1,lucky[k]);
+            //console.log(k,lucky[k-1]);
           }
         });
-        k++;
       }
-
-      client.get(num, (err, value2) =>
-      {
-        if(value2) 
-        {
-          res.send({text:`${num} liczba z kolei w ciągu liczb szczęśliwych to: ${value2}`});
-        }
-      });
-      
     }
   }
   );
