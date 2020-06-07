@@ -23,6 +23,8 @@ kubectl get storageclasses
 
 kubectl apply -f postgres-pvc.yml
 kubectl apply -f postgres-deployment.yml
+kubectl apply -f postgres-secret.yml
+kubectl apply -f myapp-configMap.yml
 kubectl get pvc
 kubectl get deploy
 
