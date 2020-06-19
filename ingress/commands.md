@@ -32,5 +32,5 @@ kubectl apply -f mybackend-service-clusterip.yml
 kubectl apply -f ingress-service.yml
 
 kubectl get ingress
-kubectl describe ??NIE WIEM CO???
+kubectl describe
 
