@@ -29,7 +29,8 @@ pgClient
 
 const client = redis.createClient({
   host: keys.redisHost,
-  port: keys.redisPort
+  port: keys.redisPort,
+  retry_strategy:() => 1000
 });
 
 client.set(0, parseInt(0));
@@ -57,12 +58,9 @@ app.get('/results', async (req, res) => {
   res.send({gcd: result.rows})
 });
 
-const port = 5000;
-
-app.listen(5000, err => {
-  console.log(`Backend Listening ${port}`);
+app.get('/', (req, res) => {
+  res.send("Howdy stranger!");
 });
-
 
 app.get('/droptable', (req, res)=>
 {
@@ -127,3 +125,9 @@ app.get('/islucky/:num', (req, res)=>
   );
 }
 );
+
+const port = 5000;
+
+app.listen(port, err => {
+  console.log(`Backend Listening ${port}`);
+});

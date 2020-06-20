@@ -5,82 +5,90 @@ import './App.css';
 
 class App extends Component
 {
-   constructor()
-   {
-     super()
-     this.state = 
-     {
-       answer: '',
-       info: ''
-     }
-     this.handleClick = this.handleClick.bind(this)
-     this.handleClick2 = this.handleClick2.bind(this)
-   }
-
-
-  async handleClick2 ()
-  {
-    await axios.get(`/api/droptable`).then(response =>
-      {
-        console.log(response);
-        this.setState({answer: response.data.text, info: response.data.info})
-      })
-  }
-
-  async handleClick ()
-  {
-    //var range = document.getElementById("range").value;
-    var num = document.getElementById("num").value;
-
-    if(isNaN(num))
+    constructor()
     {
-      this.setState({answer: 'Not a Number!!!'})
-      console.log('Not a Number entered');
-      return;
+        super()
+        this.handleClickHello = this.handleClickHello.bind(this)
+        this.handleClickCache = this.handleClickCache.bind(this)
     }
-    else if(/\S/.test(num))
+
+
+
+    async handleClickCache ()
     {
-      this.setState({answer: 'Calculating...'})
-      this.setState({info: ''})
-      await axios.get(`/api/islucky/${num}`).then(response =>
+        var xd = 1;
+        await axios.get(`/api/${xd}`).then(response =>
         {
-          console.log(response);
-          this.setState({answer: response.data.text, info: response.data.info})
+            console.log(response.data);
+            // document.getElementById("result").value = response.data.toString();
+
         })
     }
-    else
+
+    async handleClickCacheDebug ()
     {
-      this.setState({answer: 'Nothing entered'})
-      console.log('Nothing entered');
-      return;
+        var beer = document.getElementById("beer").value;
+        await axios.get(`/api/${beer}/${beer}`).then(response =>
+        {
+            console.log(response.data);
+            document.getElementById("result").value = response.data.toString();
+
+        })
     }
-  } 
 
+    async handleClickHello ()
+    {
+        var beer = document.getElementById("beer").value;
 
-render() {
+        await axios.get(`/api/bac/${beer}`).then(response =>
+        {
+            console.log(response);
+            document.getElementById("result").value = response.data.toString();
 
-  //const handleClick = async () => 
-  //{
-    //const Response = await axios.get('/api/');
-    //console.log(Response);
-  //};
-  // wtedy w button: <button onClick={handleClick}>
+        })
+    }
 
-  return (
-    <div className="App">
-      <header className="App-header">
+    onCalculateClicked = async () => {
+        var beer = document.getElementById("beer").value;
+        // var shot = document.getElementById("shot").value;
+        // var wine = document.getElementById("wine").value;
+        // var weight = document.getElementById("weight").value;
+        // var time = document.getElementById("time").value;
+        const response = await axios.get(`/api/bac/${beer}`);
+        console.log(response);
+        document.getElementById("result").value = response.data.toString();
+    };
+
+    render() {
+
+        return (
+            <div className="App">
+            <header className="App-header">
+            <p>Breathalyzer by pluszak</p>
+
         <img src={logo} className="App-logo" alt="logo" />
-        <input type="text" id="num" placeholder="Którą liczbę znaleźć..."></input>
-        <div>
-          <button onClick={this.handleClick}> Send Request </button>
-          <p>{this.state.answer}</p>
-          <p>{this.state.info}</p>
-          <button onClick={this.handleClick2}> Clear Cache </button>
+
+            <input type="text" id="beer" placeholder="Ile piw wypiłeś..."></input>
+            {/*<input type="text" id="shot" placeholder="Ile szotów wypiłeś..."></input>*/}
+            {/*<input type="text" id="wine" placeholder="Ile kieliszków wina wypiłeś..."></input>*/}
+            {/*<input type="text" id="weight" placeholder="Ile ważysz..."></input>*/}
+            {/*<input type="text" id="time" placeholder="Ile godzin temu przestałeś pić.."></input>*/}
+            <div>
+
+                <button onClick={this.handleClickHello}>Calculate</button>
+
+        <p>Szacowany poziom alkoholu we krwi :</p>
+
         </div>
-      </header>
-    </div>
-  );
-}
+        <input type="text" id="result" placeholder="wynik"></input>
+            <p>Developer mode (open console):</p>
+        <button onClick={this.handleClickCache}> SHOW CACHE </button>
+        <button onClick={this.handleClickCacheDebug}> Debug </button>
+
+        </header>
+        </div>
+    );
+    }
 }
 
 export default App;
