@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: my-frontend-container
-          image: adammakiewicz/lucky-frontend:release6
+          image: adammakiewicz/lucky-frontend:release10
           envFrom:
             - configMapRef:
                 name: myapp-config

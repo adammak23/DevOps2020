@@ -10,7 +10,7 @@ services:
 
   my-backend:
     build:
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
       context: ./backend
     volumes:
       - /opt/app/node_modules
@@ -30,7 +30,7 @@ services:
   
   my-frontend:
     build:
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
       context: ./frontend
     volumes:
       - /opt/app/node_modules
@@ -40,7 +40,7 @@ services:
   nginx:
     restart: always
     build:
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
       context: ./nginx
     ports:
       - '8080:80'
